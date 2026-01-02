@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./css/main.css" rel="stylesheet" />
+    <title>Profil - Kembangin</title>
+    <style>
+      main { margin-top: 80px; }
+      .profile-header {
+        background: #f9f9fb;
+        padding: 40px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+      }
+      .profile-container {
+        display: flex;
+        gap: 60px;
+        align-items: flex-start;
+        padding: 40px 0;
+      }
+      .profile-left {
+        flex: 0 0 280px;
+        text-align: center;
+      }
+      .profile-avatar {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 20px;
+        background: #e0e0e0;
+      }
+      .profile-info h2 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: #000;
+      }
+      .profile-info p {
+        font-size: 13px;
+        color: rgba(0,0,0,0.6);
+        margin-bottom: 2px;
+      }
+      .profile-edit-btn {
+        margin-top: 20px;
+      }
+      .profile-right {
+        flex: 1;
+      }
+      .profile-right h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: #000;
+      }
+      .profile-right p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: rgba(0,0,0,0.7);
+      }
+      .divider-section {
+        width: 100%;
+        height: 1px;
+        background: rgba(0,0,0,0.1);
+        margin: 40px 0;
+      }
+      .umkm-section h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #6c26d9;
+        margin-bottom: 24px;
+      }
+      .umkm-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .umkm-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+      .umkm-button {
+        background: #6c26d9;
+        color: white;
+        border: none;
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .umkm-button:hover {
+        background: #5419b8;
+      }
+      .umkm-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #f0e6ff 0%, #e6d5ff 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: rgba(0,0,0,0.4);
+      }
+      .umkm-info {
+        padding: 16px;
+      }
+      .umkm-info h4 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: #000;
+      }
+      .umkm-info p {
+        font-size: 12px;
+        color: rgba(0,0,0,0.6);
+      }
+      .chart-section {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        margin-top: 30px;
+      }
+      .chart-section h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #000;
+      }
+      .chart-placeholder {
+        width: 100%;
+        height: 250px;
+        background: linear-gradient(135deg, #f9f9fb 0%, #f0f0f5 100%);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(0,0,0,0.4);
+      }
+      .logout-btn {
+        margin-top: 12px;
+      }
+      @media (max-width: 900px) {
+        .profile-container { flex-direction: column; gap: 30px; }
+        .profile-left { flex: 1; width: 100%; }
+        .umkm-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-container">
+        <div class="logo">
+          <img src="images/logo%20kelompok%2011%20vinix-01.png" alt="Kembangin logo" class="logo-img" />
+          <span>Beranda</span>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Beranda</a>
+          <a href="#influencer">Influencer</a>
+          <a href="#umkm">UMKM</a>
+          <a href="#investasi">Investasi</a>
+          <a href="profil.html">Profil</a>
+          <div class="search-box">
+            <input type="text" placeholder="Search in site" />
+            <span>🔍</span>
+          </div>
+          <a href="login.html" class="hero-btn" id="navLoginBtn">Login</a>
+          <button id="navLogoutBtn" class="hero-btn" style="display:none; background:#d32; border:none; cursor:pointer;">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div class="container">
+        <!-- Profile Header Section -->
+        <div class="profile-header">
+          <div class="profile-container">
+            <div class="profile-left">
+              <div style="width:180px; height:180px; border-radius:50%; background:#ddd; margin:0 auto 20px;"></div>
+              <div class="profile-info">
+                <h2 id="profileName">-</h2>
+                <p id="profileEmail">-</p>
+                <p id="profilePhone">-</p>
+              </div>
+              <div class="profile-edit-btn">
+                <button class="hero-btn" style="width:100%">Edit Profil</button>
+              </div>
+            </div>
+            <div class="profile-right">
+              <h3>Tentang</h3>
+              <p id="profileBio">
+                Seorang konsultan keuangan yang tertarik mendukung pertumbuhan UMKM lokal melalui investasi bersama sosial.
+                Jonathan percaya bahwa bisnis kecil adalah tulang punggung ekonomi Indonesia, dan melalui KEMBANGIN ia ingin membantu
+                UMKM mencapai potensi terbaiknya.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider-section"></div>
+
+        <!-- UMKM Section -->
+        <section class="umkm-section">
+          <h2>Daftar UMKM yang Didanai</h2>
+          <div style="margin-bottom: 20px;">
+            <button class="hero-btn" style="width: 230px;">Lihat Semua UMKM</button>
+          </div>
+
+          <div class="umkm-grid">
+            <div class="umkm-card">
+              <div class="umkm-image" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);">
+                [Gambar UMKM 1]
+              </div>
+              <div class="umkm-info">
+                <h4>Keripik Pisang</h4>
+                <p>Siti Rahanisa</p>
+              </div>
+            </div>
+
+            <div class="chart-section" style="grid-column: 1/-1;">
+              <h3>Perkembangan Penjualan</h3>
+              <div class="chart-placeholder">
+                [Chart akan ditampilkan di sini]
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider-section"></div>
+
+        <!-- Footer Section -->
+        <div style="text-align: center; padding: 40px 0; font-size: 14px;">
+          <a href="#" style="color: #6c26d9; text-decoration: none; margin: 0 16px;">Kebijakan Privasi</a>
+          <a href="#" style="color: #6c26d9; text-decoration: none; margin: 0 16px;">Syarat dan Ketentuan</a>
+          <a href="#" style="color: #6c26d9; text-decoration: none; margin: 0 16px;">Bantuan</a>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Check if user is logged in
+      (function(){
+        try {
+          var cur = localStorage.getItem('currentUser');
+          var loginBtn = document.getElementById('navLoginBtn');
+          var logoutBtn = document.getElementById('navLogoutBtn');
+          var profileName = document.getElementById('profileName');
+          var profileEmail = document.getElementById('profileEmail');
+          
+          if(cur){
+            var user = JSON.parse(cur);
+            // User is logged in
+            if(loginBtn) loginBtn.style.display = 'none';
+            if(logoutBtn) logoutBtn.style.display = 'inline-block';
+            if(profileName) profileName.textContent = user.name;
+            if(profileEmail) profileEmail.textContent = user.email;
+          } else {
+            // Not logged in - redirect to login
+            window.location.href = 'login.html';
+          }
+        } catch(e) { /* ignore */ }
+      })();
+
+      // Logout handler
+      document.getElementById('navLogoutBtn').addEventListener('click', function(){
+        if(confirm('Anda yakin ingin logout?')){
+          try{
+            localStorage.removeItem('currentUser');
+          }catch(e){ /* ignore */ }
+          window.location.href = 'index.html';
+        }
+      });
+    </script>
+  </body>
+</html>
