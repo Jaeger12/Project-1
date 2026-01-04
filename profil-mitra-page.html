@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="./css/main.css" rel="stylesheet" />
+    <title>Profil UMKM - Kembangin</title>
+    <style>
+      body { background: #f5f5f7; }
+      
+      .dashboard-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding: 20px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        z-index: 1000;
+      }
+      
+      .dashboard-nav .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+      
+      .dashboard-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #000;
+      }
+      
+      .dashboard-logo img {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+      }
+      
+      .dashboard-menu {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+      }
+      
+      .dashboard-menu a {
+        color: #666;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      
+      .dashboard-menu a:hover,
+      .dashboard-menu a.active {
+        color: #6c26d9;
+      }
+      
+      /* Profile Header */
+      .profile-header {
+        margin-top: 80px;
+        background: linear-gradient(135deg, #6c26d9 0%, #8b5cf6 100%);
+        padding: 60px 40px;
+        color: #fff;
+      }
+      
+      .profile-header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+      
+      .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid rgba(255,255,255,0.3);
+        background: #fff;
+        flex-shrink: 0;
+        cursor: pointer;
+        position: relative;
+      }
+      
+      .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .profile-avatar-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e5e5e5;
+        color: #999;
+        font-size: 14px;
+      }
+      
+      .profile-info h1 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      
+      .profile-bio {
+        font-size: 15px;
+        line-height: 1.6;
+        opacity: 0.95;
+        max-width: 700px;
+        margin-bottom: 20px;
+      }
+      
+      .profile-buttons {
+        display: flex;
+        gap: 12px;
+      }
+      
+      .btn-white {
+        background: #fff;
+        color: #6c26d9;
+        padding: 10px 24px;
+        border-radius: 8px;
+        border: none;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      
+      .btn-white:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      }
+      
+      .btn-outline {
+        background: transparent;
+        color: #fff;
+        padding: 10px 24px;
+        border-radius: 8px;
+        border: 2px solid #fff;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      
+      .btn-outline:hover {
+        background: rgba(255,255,255,0.1);
+      }
+      
+      /* Content Section */
+      .content-section {
+        max-width: 1400px;
+        margin: 60px auto;
+        padding: 0 40px;
+      }
+      
+      .section-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: #000;
+      }
+      
+      /* Product Photos */
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-bottom: 60px;
+      }
+      
+      .product-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        display: flex;
+        gap: 20px;
+      }
+      
+      .product-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #f0f0f0;
+      }
+      
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .product-info h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 8px;
+      }
+      
+      .product-info p {
+        font-size: 14px;
+        color: #666;
+      }
+      
+      /* Detail Proposal */
+      .proposal-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+      }
+      
+      .proposal-left h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 32px;
+      }
+      
+      .proposal-right {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .info-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .info-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6c26d9 0%, #8b5cf6 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+      
+      .info-content h4 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #666;
+        margin-bottom: 4px;
+      }
+      
+      .info-content p {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+      }
+      
+      /* Footer */
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+        padding: 40px 0;
+        border-top: 1px solid #e5e5e5;
+      }
+      
+      .footer-links a {
+        color: #6c26d9;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      
+      .footer-links a:hover {
+        text-decoration: underline;
+      }
+      
+      /* Edit Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .modal.active {
+        display: flex;
+      }
+      
+      .modal-content {
+        background: #fff;
+        border-radius: 16px;
+        padding: 40px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      
+      .modal-header h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #000;
+      }
+      
+      .close-modal {
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #666;
+      }
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      
+      .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 8px;
+      }
+      
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
+      }
+      
+      .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      
+      .btn-save {
+        background: linear-gradient(135deg, #6c26d9 0%, #8b5cf6 100%);
+        color: #fff;
+        padding: 12px 32px;
+        border-radius: 8px;
+        border: none;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s;
+      }
+      
+      .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(108, 38, 217, 0.3);
+      }
+      
+      @media (max-width: 1024px) {
+        .product-grid,
+        .proposal-section {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .profile-header-content {
+          flex-direction: column;
+          text-align: center;
+        }
+        
+        .profile-buttons {
+          justify-content: center;
+        }
+        
+        .dashboard-menu {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Dashboard Navigation -->
+    <nav class="dashboard-nav">
+      <div class="nav-container">
+        <div class="dashboard-logo">
+          <img src="images/logo%20kelompok%2011%20vinix-01.png" alt="Logo" />
+          <span>Profil UMKM</span>
+        </div>
+        <div class="dashboard-menu">
+          <a href="dashboard-mitra-umkm.html">Dashboard</a>
+          <a href="influencer-page.html">Influencer</a>
+          <a href="dana_investor_page.html" >Dana Investor</a>
+          <a href="milestone-page.html">Milestone</a>
+          <a href="#">Pelatihan</a>
+          <a href="profil-mitra-page.html" class="active">Profil</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <section class="profile-header">
+      <div class="profile-header-content">
+        <div class="profile-avatar" id="profileAvatar" onclick="document.getElementById('avatarInput').click()">
+          <img id="avatarImg" src="" alt="Profile" style="display: none;" />
+          <div id="avatarPlaceholder" class="profile-avatar-placeholder">Klik untuk upload foto</div>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display: none;" />
+        
+        <div class="profile-info">
+          <h1 id="profileName">SITI RAHMAWATI</h1>
+          <p class="profile-bio" id="profileBio">
+            Saya menjalankan usaha keripik pisang dari resep keluarga sejak lima tahun lalu di Yogyakarta.
+            Meski digemari pelanggan, usahanya terkendala modal, promosi, dan pencatatan keuangan.
+          </p>
+          <div class="profile-buttons">
+            <button class="btn-white" onclick="openEditModal()">Edit Profil</button>
+            <button class="btn-outline" onclick="window.location.href='index.html'">Beranda</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+      <!-- Product Photos -->
+      <h2 class="section-title">Foto Produk</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="images/sepatu.jpg" alt="Produk 1" />
+          </div>
+          <div class="product-info">
+            <h3>Foto Produk</h3>
+            <p>Gambar produk tertampilkan di sini.</p>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <div class="product-image">
+            <img src="images/baju.jpg" alt="Produk 2" />
+          </div>
+          <div class="product-info">
+            <h3>Foto Produk</h3>
+            <p>Gambar produk tertampilkan di sini.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail Proposal -->
+      <div class="proposal-section">
+        <div class="proposal-left">
+          <h2>Detail Proposal</h2>
+        </div>
+        
+        <div class="proposal-right">
+          <div class="info-card">
+            <div class="info-icon">💼</div>
+            <div class="info-content">
+              <h4>Ringkasan Usaha</h4>
+              <p id="businessSummary">Usaha ini bertujuan untuk menyediakan makanan sehat.</p>
+            </div>
+          </div>
+          
+          <div class="info-card">
+            <div class="info-icon">🎯</div>
+            <div class="info-content">
+              <h4>Target</h4>
+              <p id="businessTarget">Meningkatkan penjualan 50% dalam 1 tahun.</p>
+            </div>
+          </div>
+          
+          <div class="info-card">
+            <div class="info-icon">💰</div>
+            <div class="info-content">
+              <h4>Kebutuhan Dana</h4>
+              <p id="fundingNeed">Rp 100.000.000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-links">
+        <a href="#">Tentang Kami</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Kontak</a>
+        <a href="#">Bantuan</a>
+      </div>
+    </footer>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Profil</h2>
+          <button class="close-modal" onclick="closeEditModal()">&times;</button>
+        </div>
+        
+        <form id="editProfileForm">
+          <div class="form-group">
+            <label>Nama UMKM</label>
+            <input type="text" id="editName" placeholder="Nama UMKM" required />
+          </div>
+          
+          <div class="form-group">
+            <label>Deskripsi Usaha</label>
+            <textarea id="editBio" placeholder="Ceritakan tentang usaha Anda" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Ringkasan Usaha</label>
+            <input type="text" id="editSummary" placeholder="Tujuan usaha" required />
+          </div>
+          
+          <div class="form-group">
+            <label>Target Bisnis</label>
+            <input type="text" id="editTarget" placeholder="Target yang ingin dicapai" required />
+          </div>
+          
+          <div class="form-group">
+            <label>Kebutuhan Dana</label>
+            <input type="text" id="editFunding" placeholder="Rp 100.000.000" required />
+          </div>
+          
+          <button type="submit" class="btn-save">Simpan Perubahan</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      let currentMitra = null;
+      
+      // Check if user is logged in as mitra
+      (function(){
+        try {
+          const mitraData = localStorage.getItem('currentMitra');
+          if(!mitraData) {
+            alert('Anda harus login sebagai mitra terlebih dahulu.');
+            window.location.href = 'login-mitra.html';
+            return;
+          }
+          
+          currentMitra = JSON.parse(mitraData);
+          loadProfileData();
+        } catch(e) {
+          window.location.href = 'login-mitra.html';
+        }
+      })();
+      
+      // Load profile data
+      function loadProfileData() {
+        if(currentMitra) {
+          document.getElementById('profileName').textContent = currentMitra.name.toUpperCase();
+          
+          if(currentMitra.businessDesc) {
+            document.getElementById('profileBio').textContent = currentMitra.businessDesc;
+          }
+          
+          if(currentMitra.businessSummary) {
+            document.getElementById('businessSummary').textContent = currentMitra.businessSummary;
+          }
+          
+          if(currentMitra.businessTarget) {
+            document.getElementById('businessTarget').textContent = currentMitra.businessTarget;
+          }
+          
+          if(currentMitra.fundingNeed) {
+            document.getElementById('fundingNeed').textContent = currentMitra.fundingNeed;
+          }
+          
+          if(currentMitra.avatar) {
+            document.getElementById('avatarImg').src = currentMitra.avatar;
+            document.getElementById('avatarImg').style.display = 'block';
+            document.getElementById('avatarPlaceholder').style.display = 'none';
+          }
+        }
+      }
+      
+      // Avatar upload
+      document.getElementById('avatarInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if(file) {
+          if(file.size > 2 * 1024 * 1024) {
+            alert('Ukuran file terlalu besar. Maksimal 2MB.');
+            return;
+          }
+          
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const avatarImg = document.getElementById('avatarImg');
+            const placeholder = document.getElementById('avatarPlaceholder');
+            
+            avatarImg.src = event.target.result;
+            avatarImg.style.display = 'block';
+            placeholder.style.display = 'none';
+            
+            // Save to mitra data
+            currentMitra.avatar = event.target.result;
+            localStorage.setItem('currentMitra', JSON.stringify(currentMitra));
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Open edit modal
+      function openEditModal() {
+        document.getElementById('editName').value = currentMitra.name || '';
+        document.getElementById('editBio').value = currentMitra.businessDesc || '';
+        document.getElementById('editSummary').value = currentMitra.businessSummary || 'Usaha ini bertujuan untuk menyediakan makanan sehat.';
+        document.getElementById('editTarget').value = currentMitra.businessTarget || 'Meningkatkan penjualan 50% dalam 1 tahun.';
+        document.getElementById('editFunding').value = currentMitra.fundingNeed || 'Rp 100.000.000';
+        
+        document.getElementById('editModal').classList.add('active');
+      }
+      
+      // Close edit modal
+      function closeEditModal() {
+        document.getElementById('editModal').classList.remove('active');
+      }
+      
+      // Save profile changes
+      document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        currentMitra.name = document.getElementById('editName').value;
+        currentMitra.businessDesc = document.getElementById('editBio').value;
+        currentMitra.businessSummary = document.getElementById('editSummary').value;
+        currentMitra.businessTarget = document.getElementById('editTarget').value;
+        currentMitra.fundingNeed = document.getElementById('editFunding').value;
+        
+        // Update in mitras array
+        try {
+          let mitras = JSON.parse(localStorage.getItem('mitras') || '[]');
+          const index = mitras.findIndex(m => m.email === currentMitra.email);
+          if(index !== -1) {
+            mitras[index] = {...mitras[index], ...currentMitra};
+            localStorage.setItem('mitras', JSON.stringify(mitras));
+          }
+        } catch(e) {}
+        
+        // Update current mitra
+        localStorage.setItem('currentMitra', JSON.stringify(currentMitra));
+        
+        // Reload data
+        loadProfileData();
+        closeEditModal();
+        
+        alert('Profil berhasil diperbarui!');
+      });
+      
+      // Close modal when clicking outside
+      document.getElementById('editModal').addEventListener('click', function(e) {
+        if(e.target === this) {
+          closeEditModal();
+        }
+      });
+    </script>
+  </body>
+</html>

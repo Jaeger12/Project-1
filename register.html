@@ -20,7 +20,7 @@
 
       .login-visual {
         flex: 1;
-        background: url("images/v92_156.png") center/cover no-repeat;
+        background: url("images/background login.jpg") center/cover no-repeat;
         position: relative;
         display: flex;
         align-items: center;
@@ -151,6 +151,10 @@
                 <input id="email" type="email" placeholder="Masukkan Email" />
               </div>
               <div class="form-group">
+                <label>No. Telepon</label>
+                <input id="phone" type="text" placeholder="Masukkan No. Telepon" />
+              </div>
+              <div class="form-group">
                 <label>Password</label>
                 <input id="password" type="password" placeholder="Masukkan Password" />
               </div>
@@ -171,6 +175,22 @@
       </div>
     </main>
     <script>
+      // Update navbar text based on current page
+      (function(){
+        const logoSpan = document.querySelector('.logo span');
+        const currentPage = window.location.pathname.split('/').pop();
+        
+        if(currentPage === 'index.html' || currentPage === '') {
+          if(logoSpan) logoSpan.textContent = 'Beranda';
+        } else if(currentPage === 'profil.html') {
+          if(logoSpan) logoSpan.textContent = 'Profil';
+        } else if(currentPage === 'login.html') {
+          if(logoSpan) logoSpan.textContent = 'Login';
+        } else if(currentPage === 'register.html') {
+          if(logoSpan) logoSpan.textContent = 'Register';
+        }
+      })();
+
       function getUsers(){
         try{ return JSON.parse(localStorage.getItem('users')||'[]'); }catch(e){return[]}
       }
@@ -180,15 +200,16 @@
         e.preventDefault();
         var name = document.getElementById('fullName').value.trim();
         var email = document.getElementById('email').value.trim().toLowerCase();
+        var phone = document.getElementById('phone').value.trim();
         var pass = document.getElementById('password').value;
         var pass2 = document.getElementById('confirmPassword').value;
         var msg = document.getElementById('registerMessage');
         msg.textContent = '';
-        if(!name || !email || !pass){ msg.textContent = 'Semua field wajib diisi.'; return; }
+        if(!name || !email || !phone || !pass){ msg.textContent = 'Semua field wajib diisi.'; return; }
         if(pass !== pass2){ msg.textContent = 'Password dan konfirmasi tidak cocok.'; return; }
         var users = getUsers();
         if(users.some(function(u){ return u.email === email; })){ msg.textContent = 'Email sudah terdaftar.'; return; }
-        users.push({ name: name, email: email, password: pass });
+        users.push({ name: name, email: email, password: pass, phone: phone });
         saveUsers(users);
         alert('Pendaftaran berhasil. Silakan masuk.');
         window.location.href = 'login.html';

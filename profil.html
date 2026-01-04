@@ -8,6 +8,7 @@
       rel="stylesheet"
     />
     <link href="./css/main.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Profil - Kembangin</title>
     <style>
       main { margin-top: 80px; }
@@ -149,6 +150,69 @@
       .logout-btn {
         margin-top: 12px;
       }
+      .edit-form {
+        display: none;
+      }
+      .edit-form.active {
+        display: block;
+      }
+      .edit-form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: Poppins, sans-serif;
+        box-sizing: border-box;
+      }
+      .edit-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: Poppins, sans-serif;
+        min-height: 100px;
+        resize: vertical;
+        box-sizing: border-box;
+      }
+      .edit-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .edit-buttons button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .btn-save {
+        background: #6c26d9;
+        color: white;
+      }
+      .btn-save:hover {
+        background: #5419b8;
+      }
+      .btn-cancel {
+        background: #e0e0e0;
+        color: #000;
+      }
+      .btn-cancel:hover {
+        background: #d0d0d0;
+      }
+      .profile-view {
+        display: block;
+      }
+      .profile-view.hidden {
+        display: none;
+      }
       @media (max-width: 900px) {
         .profile-container { flex-direction: column; gap: 30px; }
         .profile-left { flex: 1; width: 100%; }
@@ -166,10 +230,10 @@
         </div>
         <div class="nav-links">
           <a href="index.html">Beranda</a>
-          <a href="#influencer">Influencer</a>
-          <a href="#umkm">UMKM</a>
-          <a href="#investasi">Investasi</a>
-          <a href="profil.html">Profil</a>
+          
+          <a href="umkm.html">UMKM</a>
+          <a href="investasi-list.html">Investasi</a>
+          <a href="profil.html"class="active">Profil</a>
           <div class="search-box">
             <input type="text" placeholder="Search in site" />
             <span>🔍</span>
@@ -186,25 +250,39 @@
         <div class="profile-header">
           <div class="profile-container">
             <div class="profile-left">
-              <div style="width:180px; height:180px; border-radius:50%; background:#ddd; margin:0 auto 20px;"></div>
-              <div class="profile-info">
+              <div id="profileImageContainer" style="width:180px; height:180px; border-radius:50%; background:#ddd; margin:0 auto 20px; overflow:hidden; cursor:pointer; position:relative; display:flex; align-items:center; justify-content:center;">
+                <img id="profileImageDisplay" src="" alt="Profile" style="width:100%; height:100%; object-fit:cover; display:none;" />
+                <span id="profileImagePlaceholder" style="color:#999; font-size:14px;">Klik untuk upload foto</span>
+              </div>
+              <input type="file" id="profileImageInput" accept="image/*" style="display:none;" />
+              <div class="profile-info profile-view" id="profileView">
                 <h2 id="profileName">-</h2>
                 <p id="profileEmail">-</p>
                 <p id="profilePhone">-</p>
               </div>
+              <div class="edit-form" id="editForm">
+                <input type="text" id="editName" placeholder="Nama" />
+                <input type="text" id="editPhone" placeholder="No. Telepon" />
+              </div>
               <div class="profile-edit-btn">
-                <button class="hero-btn" style="width:100%">Edit Profil</button>
+                <button class="hero-btn" id="editProfileBtn" style="width:100%">Edit Profil</button>
+                <div class="edit-buttons" id="editButtons" style="display:none;">
+                  <button class="btn-save" id="saveProfileBtn">Simpan</button>
+                  <button class="btn-cancel" id="cancelProfileBtn">Batal</button>
+                </div>
               </div>
             </div>
             <div class="profile-right">
               <h3>Tentang</h3>
-              <p id="profileBio">
+              <p id="profileBio" class="profile-view">
                 Seorang konsultan keuangan yang tertarik mendukung pertumbuhan UMKM lokal melalui investasi bersama sosial.
                 Jonathan percaya bahwa bisnis kecil adalah tulang punggung ekonomi Indonesia, dan melalui KEMBANGIN ia ingin membantu
                 UMKM mencapai potensi terbaiknya.
               </p>
+              <div id="editBioContainer" class="edit-form" style="display: none;">
+                <textarea id="editBio" placeholder="Tentang Anda"></textarea>
+              </div>
             </div>
-          </div>
         </div>
 
         <div class="divider-section"></div>
@@ -213,26 +291,16 @@
         <section class="umkm-section">
           <h2>Daftar UMKM yang Didanai</h2>
           <div style="margin-bottom: 20px;">
-            <button class="hero-btn" style="width: 230px;">Lihat Semua UMKM</button>
+            <a href="investasi-list.html" class="hero-btn" style="width: 230px; display:inline-block; text-align:center;">Lihat Semua UMKM</a>
           </div>
 
-          <div class="umkm-grid">
-            <div class="umkm-card">
-              <div class="umkm-image" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);">
-                [Gambar UMKM 1]
-              </div>
-              <div class="umkm-info">
-                <h4>Keripik Pisang</h4>
-                <p>Siti Rahanisa</p>
-              </div>
-            </div>
-
-            <div class="chart-section" style="grid-column: 1/-1;">
-              <h3>Perkembangan Penjualan</h3>
-              <div class="chart-placeholder">
-                [Chart akan ditampilkan di sini]
-              </div>
-            </div>
+          <div class="umkm-grid" id="umkmGridContainer">
+            <!-- Cards will be generated by JavaScript -->
+          </div>
+          
+          <div id="noInvestmentMsg" style="text-align:center; padding:40px; color:#999;">
+            <p>Anda belum melakukan investasi. <a href="investasi-list.html" style="color:#6c26d9; text-decoration:none; font-weight:600;">Mulai investasi sekarang</a></p>
+          </div>
           </div>
         </section>
 
@@ -248,7 +316,23 @@
     </main>
 
     <script>
+      // Update navbar text based on current page
+      (function(){
+        const logoSpan = document.querySelector('.logo span');
+        const currentPage = window.location.pathname.split('/').pop();
+        
+        if(currentPage === 'profil.html' || currentPage === '') {
+          if(logoSpan) logoSpan.textContent = 'Profil';
+        } else if(currentPage === 'login.html') {
+          if(logoSpan) logoSpan.textContent = 'Login';
+        } else if(currentPage === 'register.html') {
+          if(logoSpan) logoSpan.textContent = 'Register';
+        }
+      })();
+
       // Check if user is logged in
+      let currentUserData = null;
+      
       (function(){
         try {
           var cur = localStorage.getItem('currentUser');
@@ -256,14 +340,28 @@
           var logoutBtn = document.getElementById('navLogoutBtn');
           var profileName = document.getElementById('profileName');
           var profileEmail = document.getElementById('profileEmail');
+          var profileBio = document.getElementById('profileBio');
           
           if(cur){
-            var user = JSON.parse(cur);
+            currentUserData = JSON.parse(cur);
             // User is logged in
             if(loginBtn) loginBtn.style.display = 'none';
             if(logoutBtn) logoutBtn.style.display = 'inline-block';
-            if(profileName) profileName.textContent = user.name;
-            if(profileEmail) profileEmail.textContent = user.email;
+            if(profileName) profileName.textContent = currentUserData.name || '-';
+            if(profileEmail) profileEmail.textContent = currentUserData.email || '-';
+            var profilePhone = document.getElementById('profilePhone');
+            if(profilePhone) profilePhone.textContent = currentUserData.phone || '-';
+            if(profileBio && currentUserData.bio) profileBio.textContent = currentUserData.bio;
+            // Load profile image if exists
+            if(currentUserData.profileImage){
+              const imgDisplay = document.getElementById('profileImageDisplay');
+              const imgPlaceholder = document.getElementById('profileImagePlaceholder');
+              if(imgDisplay && imgPlaceholder){
+                imgDisplay.src = currentUserData.profileImage;
+                imgDisplay.style.display = 'block';
+                imgPlaceholder.style.display = 'none';
+              }
+            }
           } else {
             // Not logged in - redirect to login
             window.location.href = 'login.html';
@@ -280,6 +378,259 @@
           window.location.href = 'index.html';
         }
       });
+
+      // Edit Profile functionality
+      const editProfileBtn = document.getElementById('editProfileBtn');
+      const saveProfileBtn = document.getElementById('saveProfileBtn');
+      const cancelProfileBtn = document.getElementById('cancelProfileBtn');
+      const profileView = document.getElementById('profileView');
+      const editForm = document.getElementById('editForm');
+      const editBio = document.getElementById('editBio');
+      const editBioContainer = document.getElementById('editBioContainer');
+      const editName = document.getElementById('editName');
+      const profileBio = document.getElementById('profileBio');
+      const editButtons = document.getElementById('editButtons');
+      const profileEditBtn = document.querySelector('.profile-edit-btn');
+      const profileImageInput = document.getElementById('profileImageInput');
+      const profileImageContainer = document.getElementById('profileImageContainer');
+      const profileImageDisplay = document.getElementById('profileImageDisplay');
+      const profileImagePlaceholder = document.getElementById('profileImagePlaceholder');
+
+      // Profile image upload handler (only in edit mode)
+      function enableProfileImageUpload(){
+        profileImageContainer.style.cursor = 'pointer';
+        profileImageContainer.style.opacity = '1';
+        profileImageContainer.onclick = function(){
+          profileImageInput.click();
+        };
+      }
+
+      function disableProfileImageUpload(){
+        profileImageContainer.style.cursor = 'default';
+        profileImageContainer.style.opacity = '0.7';
+        profileImageContainer.onclick = null;
+      }
+
+      // Initially disable image upload
+      disableProfileImageUpload();
+
+      profileImageInput.addEventListener('change', function(e){
+        const file = e.target.files[0];
+        if(file){
+          const reader = new FileReader();
+          reader.onload = function(event){
+            profileImageDisplay.src = event.target.result;
+            profileImageDisplay.style.display = 'block';
+            profileImagePlaceholder.style.display = 'none';
+            // Save to localStorage
+            currentUserData.profileImage = event.target.result;
+            try{
+              localStorage.setItem('currentUser', JSON.stringify(currentUserData));
+            }catch(e){ /* ignore */ }
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      editProfileBtn.addEventListener('click', function(){
+        // Switch to edit mode
+        profileView.classList.add('hidden');
+        profileBio.classList.add('hidden');
+        editForm.classList.add('active');
+        editBioContainer.style.display = 'block';
+        editButtons.style.display = 'flex';
+        editProfileBtn.style.display = 'none';
+        enableProfileImageUpload();
+        
+        // Populate form with current data
+        editName.value = currentUserData.name || '';
+        document.getElementById('editPhone').value = currentUserData.phone || '';
+        editBio.value = currentUserData.bio || '';
+      });
+
+      cancelProfileBtn.addEventListener('click', function(){
+        // Switch back to view mode
+        profileView.classList.remove('hidden');
+        profileBio.classList.remove('hidden');
+        editForm.classList.remove('active');
+        editBioContainer.style.display = 'none';
+        editButtons.style.display = 'none';
+        editProfileBtn.style.display = 'block';
+        disableProfileImageUpload();
+      });
+
+      saveProfileBtn.addEventListener('click', function(){
+        // Validate input
+        if(!editName.value.trim()){
+          alert('Nama tidak boleh kosong');
+          return;
+        }
+
+        // Update user data
+        currentUserData.name = editName.value.trim();
+        currentUserData.phone = document.getElementById('editPhone').value.trim();
+        currentUserData.bio = editBio.value.trim();
+
+        // Save to localStorage
+        try{
+          localStorage.setItem('currentUser', JSON.stringify(currentUserData));
+        }catch(e){ /* ignore */ }
+
+        // Update display
+        document.getElementById('profileName').textContent = currentUserData.name;
+        document.getElementById('profilePhone').textContent = currentUserData.phone || '-';
+        profileBio.textContent = currentUserData.bio;
+
+        // Switch back to view mode
+        profileView.classList.remove('hidden');
+        profileBio.classList.remove('hidden');
+        editForm.classList.remove('active');
+        editBioContainer.style.display = 'none';
+        editButtons.style.display = 'none';
+        editProfileBtn.style.display = 'block';
+        disableProfileImageUpload();
+
+        alert('Profil berhasil diperbarui!');
+      });
+
+      // Initialize Funding Chart and UMKM Cards
+      (function(){
+        // UMKM data mapping
+        const umkmData = {
+          siti: { name: 'Keripik Pisang', owner: 'Siti Rahmawati', image: 'images/keripik-pisang.jpg' },
+          ria: { name: 'Sports Gear', owner: 'Ria Winata', image: 'images/sport-gear.jpg' },
+          andi: { name: 'Aku Tech', owner: 'Andi Kusuma', image: 'images/tech.jpg' },
+          sari: { name: 'Sari Salon & Spa', owner: 'Sari Waludari', image: 'images/salon.jpg' },
+          budi: { name: 'Budi\'s Apotek', owner: 'Budi Parker', image: 'images/apotek.jpg' },
+          nia: { name: 'Nia Tur N Travel', owner: 'Nia Rika', image: 'images/tour.jpg' }
+        };
+
+        // Get investment data
+        let investments = [];
+        try{
+          investments = JSON.parse(localStorage.getItem('currentUserInvestments') || '[]');
+        }catch(e){ /* ignore */ }
+
+        // Generate UMKM cards
+        const gridContainer = document.getElementById('umkmGridContainer');
+        const noInvestmentMsg = document.getElementById('noInvestmentMsg');
+        
+        if(investments.length === 0){
+          gridContainer.style.display = 'none';
+          noInvestmentMsg.style.display = 'block';
+        } else {
+          gridContainer.style.display = 'grid';
+          noInvestmentMsg.style.display = 'none';
+          gridContainer.innerHTML = '';
+          
+          investments.forEach(inv => {
+            const data = umkmData[inv.id];
+            if(data){
+              const card = document.createElement('div');
+              card.className = 'umkm-card';
+              card.innerHTML = `
+                <div class="umkm-image">
+                  <img src="${data.image}" alt="${data.name}" style="width:100%; height:100%; object-fit:cover;" />
+                </div>
+                <div class="umkm-info">
+                  <h4>${data.name}</h4>
+                  <p>${data.owner}</p>
+                </div>
+              `;
+              gridContainer.appendChild(card);
+            }
+          });
+          
+          // Add chart section after cards
+          const chartSection = document.createElement('div');
+          chartSection.className = 'chart-section';
+          chartSection.style.gridColumn = '1/-1';
+          chartSection.innerHTML = `
+            <h3>Aktivitas Pendanaan Anda</h3>
+            <canvas id="fundingChart" style="max-height: 250px;"></canvas>
+          `;
+          gridContainer.appendChild(chartSection);
+        }
+
+        // Create chart if there are investments
+        if(investments.length > 0){
+          setTimeout(() => {
+            const ctx = document.getElementById('fundingChart');
+            if(ctx){
+              // Aggregate investments by UMKM
+              const chartData = {};
+              investments.forEach(inv => {
+                if(!chartData[inv.umkmName]){
+                  chartData[inv.umkmName] = 0;
+                }
+                chartData[inv.umkmName] += inv.nominal / 1000000; // Convert to juta rupiah
+              });
+
+              const labels = Object.keys(chartData);
+              const data = Object.values(chartData);
+              
+              // Generate colors
+              const colors = [
+                'rgba(108, 38, 217, 0.8)',
+                'rgba(108, 38, 217, 0.7)',
+                'rgba(108, 38, 217, 0.9)',
+                'rgba(108, 38, 217, 0.6)',
+                'rgba(108, 38, 217, 0.85)',
+                'rgba(108, 38, 217, 0.75)'
+              ];
+              
+              new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: labels,
+                  datasets: [
+                    {
+                      label: 'Dana Diinvestasikan (Juta Rp)',
+                      data: data,
+                      backgroundColor: colors.slice(0, labels.length),
+                      borderColor: 'rgba(108, 38, 217, 1)',
+                      borderWidth: 1,
+                      borderRadius: 6,
+                      hoverBackgroundColor: 'rgba(84, 25, 184, 0.9)'
+                    }
+                  ]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: true,
+                  plugins: {
+                    legend: {
+                      display: true,
+                      labels: {
+                        font: { family: 'Poppins, sans-serif', size: 13, weight: '600' },
+                        color: '#000',
+                        padding: 16
+                      }
+                    }
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      ticks: {
+                        font: { family: 'Poppins, sans-serif', size: 12 },
+                        color: '#666'
+                      },
+                      grid: { color: 'rgba(0,0,0,0.05)' }
+                    },
+                    x: {
+                      ticks: {
+                        font: { family: 'Poppins, sans-serif', size: 12 },
+                        color: '#666'
+                      },
+                      grid: { display: false }
+                    }
+                  }
+                }
+              });
+            }
+          }, 100);
+        }
+      })();
     </script>
   </body>
 </html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="./css/main.css" rel="stylesheet" />
+    <title>Dashboard UMKM - Kembangin</title>
+    <style>
+      body { background: #f5f5f7; }
+      
+      .dashboard-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding: 20px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        z-index: 1000;
+      }
+      
+      .dashboard-nav .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+      
+      .dashboard-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #000;
+      }
+      
+      .dashboard-logo img {
+        width: 36px;
+        height: 36px;
+      }
+      
+      .dashboard-menu {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+      }
+      
+      .dashboard-menu a {
+        color: #666;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      
+      .dashboard-menu a:hover,
+      .dashboard-menu a.active {
+        color: #6c26d9;
+      }
+      
+      .dashboard-content {
+        max-width: 1400px;
+        margin: 100px auto 40px;
+        padding: 0 40px;
+      }
+      
+      .section-header {
+        margin-bottom: 24px;
+      }
+      
+      .section-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 8px;
+      }
+      
+      .section-subtitle {
+        font-size: 15px;
+        color: #666;
+      }
+      
+      .btn-primary {
+        background: linear-gradient(135deg, #6c26d9 0%, #8b5cf6 100%);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+      
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(108, 38, 217, 0.3);
+      }
+      
+      /* Progress Omzet Section */
+      .omzet-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 48px;
+      }
+      
+      .omzet-left {
+        background: #fff;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      }
+      
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 24px;
+      }
+      
+      .stat-card {
+        background: #f9f9fb;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      
+      .stat-label {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 8px;
+      }
+      
+      .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #000;
+      }
+      
+      .stat-change {
+        font-size: 13px;
+        color: #10b981;
+        margin-top: 4px;
+      }
+      
+      .omzet-right {
+        background: #fff;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      }
+      
+      .chart-container {
+        width: 100%;
+        height: 250px;
+        margin-top: 20px;
+        background: linear-gradient(180deg, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0.05) 100%);
+        border-radius: 8px;
+        position: relative;
+      }
+      
+      .chart-wave {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      
+      /* Milestone Section */
+      .milestone-section {
+        background: #fff;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        margin-bottom: 48px;
+      }
+      
+      .milestone-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 24px;
+      }
+      
+      .milestone-card {
+        background: #f9f9fb;
+        padding: 24px;
+        border-radius: 8px;
+        border-left: 4px solid #6c26d9;
+      }
+      
+      .milestone-label {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 8px;
+      }
+      
+      .milestone-status {
+        font-size: 20px;
+        font-weight: 700;
+        color: #000;
+      }
+      
+      .milestone-progress {
+        font-size: 14px;
+        color: #10b981;
+        margin-top: 4px;
+      }
+      
+      /* Campaign Section */
+      .campaign-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 48px;
+      }
+      
+      .campaign-left {
+        background: #fff;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      }
+      
+      .campaign-right {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .campaign-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .campaign-info h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 4px;
+      }
+      
+      .campaign-info p {
+        font-size: 13px;
+        color: #666;
+      }
+      
+      .campaign-duration {
+        font-size: 14px;
+        font-weight: 600;
+        color: #6c26d9;
+      }
+      
+      /* Notification Section */
+      .notification-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      
+      .notification-left {
+        background: #fff;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      }
+      
+      .notification-right {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .notification-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        display: flex;
+        gap: 16px;
+      }
+      
+      .notification-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #8b5cf6 0%, #6c26d9 100%);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+      
+      .notification-content h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 6px;
+      }
+      
+      .notification-content p {
+        font-size: 13px;
+        color: #666;
+        line-height: 1.5;
+      }
+      
+      @media (max-width: 1024px) {
+        .omzet-section,
+        .campaign-section,
+        .notification-section {
+          grid-template-columns: 1fr;
+        }
+        
+        .milestone-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .dashboard-content {
+          padding: 0 20px;
+        }
+        
+        .dashboard-menu {
+          gap: 16px;
+        }
+        
+        .dashboard-menu a {
+          font-size: 13px;
+        }
+        
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Dashboard Navigation -->
+    <nav class="dashboard-nav">
+      <div class="nav-container">
+        <div class="dashboard-logo">
+          <img src="images/logo%20kelompok%2011%20vinix-01.png" alt="Logo" />
+          <span>Dashboard UMKM</span>
+        </div>
+        <div class="dashboard-menu">
+          <a href="dashboard-mitra-umkm.html"class="active">Dashboard</a>
+          <a href="influencer-page.html">Influencer</a>
+          <a href="dana_investor_page.html">Dana Investor</a>
+          <a href="milestone-page.html">Milestone</a>
+          <a href="#">Pelatihan</a>
+          <a href="profil-mitra-page.html">Profil</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <main class="dashboard-content">
+      <!-- Progress Omzet Section -->
+      <section class="omzet-section">
+        <div class="omzet-left">
+          <div class="section-header">
+            <h2 class="section-title">Progress Omzet</h2>
+            <p class="section-subtitle">Pantau perkembangan omzet Anda.</p>
+          </div>
+          <button class="btn-primary">Lihat Detail</button>
+          
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Omzet Bulanan</div>
+              <div class="stat-value">$10,000</div>
+              <div class="stat-change">+5%</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Total Penjualan</div>
+              <div class="stat-value">200</div>
+              <div class="stat-change">+10%</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="omzet-right">
+          <div class="section-header">
+            <h3 style="font-size: 20px; font-weight: 600;">Tren Omzet</h3>
+            <p class="stat-label">Omzet ($)</p>
+          </div>
+          <div class="chart-container">
+            <svg class="chart-wave" viewBox="0 0 400 250" preserveAspectRatio="none">
+              <path d="M0,150 Q100,80 200,120 T400,100 L400,250 L0,250 Z" 
+                    fill="url(#gradient)" 
+                    stroke="#6c26d9" 
+                    stroke-width="2"/>
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:rgba(139,92,246,0.4);stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:rgba(139,92,246,0.05);stop-opacity:1" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div style="position: absolute; bottom: 10px; right: 20px; font-size: 12px; color: #666;">Bulan</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Milestone Section -->
+      <section class="milestone-section">
+        <div class="section-header">
+          <h2 class="section-title">Milestone Progress</h2>
+          <p class="section-subtitle">Capaian milestone UMKM.</p>
+        </div>
+        <button class="btn-primary">Detail Milestone</button>
+        
+        <div class="milestone-grid">
+          <div class="milestone-card">
+            <div class="milestone-label">Milestone 1</div>
+            <div class="milestone-status">Tercapai</div>
+          </div>
+          <div class="milestone-card">
+            <div class="milestone-label">Milestone 2</div>
+            <div class="milestone-status">Dalam Proses</div>
+            <div class="milestone-progress">+20%</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Campaign Section -->
+      <section class="campaign-section">
+        <div class="campaign-left">
+          <div class="section-header">
+            <h2 class="section-title">Daftar Campaign Influencer Aktif</h2>
+            <p class="section-subtitle">Lihat campaign influencer yang sedang berjalan.</p>
+          </div>
+          <button class="btn-primary">Lihat Semua</button>
+        </div>
+        
+        <div class="campaign-right">
+          <div class="campaign-card">
+            <div class="campaign-info">
+              <h4>Campaign A</h4>
+              <p>Oleh Influencer X</p>
+            </div>
+            <div class="campaign-duration">Durasi: 2 minggu</div>
+          </div>
+          
+          <div class="campaign-card">
+            <div class="campaign-info">
+              <h4>Campaign B</h4>
+              <p>Oleh Influencer Y</p>
+            </div>
+            <div class="campaign-duration">Durasi: 1 minggu</div>
+          </div>
+          
+          <div class="campaign-card">
+            <div class="campaign-info">
+              <h4>Campaign C</h4>
+              <p>Oleh Influencer Z</p>
+            </div>
+            <div class="campaign-duration">Durasi: 3 minggu</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notification Section -->
+      <section class="notification-section">
+        <div class="notification-left">
+          <div class="section-header">
+            <h2 class="section-title">Notifikasi & Update</h2>
+            <p class="section-subtitle">Info terbaru dari pemerintah dan investor</p>
+          </div>
+          <button class="btn-primary">Lihat Semua</button>
+        </div>
+        
+        <div class="notification-right">
+          <div class="notification-card">
+            <div class="notification-icon">🏢</div>
+            <div class="notification-content">
+              <h4>Subsidi untuk UMKM</h4>
+              <p>Dapatkan subsidi pemerintah untuk membantu usaha.</p>
+            </div>
+          </div>
+          
+          <div class="notification-card">
+            <div class="notification-icon">📊</div>
+            <div class="notification-content">
+              <h4>Investasi Baru</h4>
+              <p>Investor A ingin berinvestasi dalam bisnis Anda.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Check if user is logged in as mitra
+      (function(){
+        try {
+          const currentMitra = localStorage.getItem('currentMitra');
+          if(!currentMitra) {
+            alert('Anda harus login sebagai mitra terlebih dahulu.');
+            window.location.href = 'login-mitra.html';
+          } else {
+            const mitra = JSON.parse(currentMitra);
+            console.log('Logged in as:', mitra.name);
+          }
+        } catch(e) {
+          window.location.href = 'login-mitra.html';
+        }
+      })();
+    </script>
+  </body>
+</html>

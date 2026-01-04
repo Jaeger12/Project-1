@@ -146,7 +146,7 @@ main {
 
 .hero {
   padding: 80px 0;
-  background: linear-gradient(135deg, #f9f9fb 0%, #f0f0f5 100%);
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/Background.jpeg') center center / cover no-repeat;
   position: relative;
   overflow: hidden;
 }
@@ -169,7 +169,7 @@ main {
   font-weight: 700;
   line-height: 1.4;
   margin-bottom: 24px;
-  color: #000;
+  color: #fff;
 }
 
 .hero-btn {
@@ -316,7 +316,7 @@ main {
 /* ===== TESTIMONIALS SECTION ===== */
 .testimonials {
   padding: 80px 0;
-  background: #f9f9fb;
+  background: #6c26d9;
   position: relative;
 }
 
@@ -324,7 +324,7 @@ main {
   font-size: 40px;
   font-weight: 700;
   margin-bottom: 60px;
-  color: #000;
+  color: #fff;
 }
 
 .testimonials-grid {
@@ -334,8 +334,8 @@ main {
 }
 
 .testimonial-card {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   padding: 16px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
@@ -806,3 +806,102 @@ footer p {
 .team-card {
   animation: fadeInUp 0.6s ease-out;
 }
+
+/* ===== UMKM LIST STYLES ===== */
+.umkm-hero {
+  padding: 60px 0 20px;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/umkm.jpeg') center center / cover no-repeat;
+}
+
+.umkm-hero .section-title {
+  color: #fff;
+}
+
+.umkm-hero .umkm-search {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.umkm-search {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.08);
+  font-size: 14px;
+  outline: none;
+}
+
+.umkm-list {
+  padding: 40px 0 80px;
+  background: #f9f9fb;
+}
+
+.umkm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.umkm-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.umkm-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.umkm-image {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.umkm-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.umkm-footer {
+  background: linear-gradient(135deg, #6c26d9 0%, #5419b8 100%);
+  color: white;
+  padding: 12px 16px;
+}
+
+.umkm-footer .badge {
+  display: none;
+}
+
+.umkm-owner {
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+.umkm-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+@media (max-width: 1024px) {
+  .container { padding: 0 40px; }
+  .umkm-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .umkm-grid { grid-template-columns: 1fr; }
+  .nav-container { padding: 0 20px; }
+}
+
+/* UMKM PROFILE SPECIFIC STYLES (small additions) */
+.back-link { text-decoration: none; color: #fff; }
+.avatar-lg { box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+.profile-card img { border-radius: 6px; }

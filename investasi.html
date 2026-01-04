@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="./css/main.css" rel="stylesheet" />
+    <title>Investasi UMKM</title>
+    <style>
+      body { background: #f9f9fb; }
+      main { margin-top: 0; min-height: 100vh; padding: 40px 0; }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 170px; }
+      .investasi-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+      .investasi-left { padding: 40px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+      .investasi-left h2 { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #000; }
+      .investasi-left p { color: #666; margin-bottom: 16px; font-size: 14px; }
+      .form-group { margin-bottom: 20px; }
+      .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #000; }
+      .form-group input { width: 100%; padding: 12px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: Poppins, sans-serif; box-sizing: border-box; }
+      .form-group input:focus { outline: none; border-color: #6c26d9; }
+      .method-group { margin-bottom: 20px; }
+      .method-group label { display: block; font-weight: 600; margin-bottom: 12px; color: #000; }
+      .method-option { display: flex; align-items: center; gap: 12px; padding: 12px; border: 2px solid #ddd; border-radius: 6px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; }
+      .method-option input[type="radio"] { cursor: pointer; }
+      .method-option:hover { border-color: #6c26d9; background: #f9f9fb; }
+      .method-option input[type="radio"]:checked { accent-color: #6c26d9; }
+      .method-option.active { border-color: #6c26d9; background: #f0e6ff; }
+      .confirm-btn { width: 100%; padding: 14px 18px; background: linear-gradient(135deg,#6c26d9 0%,#5419b8 100%); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+      .confirm-btn:hover { box-shadow: 0 6px 16px rgba(108,38,217,0.3); }
+      .investasi-right { padding: 40px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+      .info-card { background: #f9f9fb; padding: 16px; border-radius: 8px; margin-bottom: 16px; }
+      .info-card strong { display: block; color: #000; margin-bottom: 4px; }
+      .info-card p { color: #666; font-size: 13px; margin: 0; }
+      .back-link { display: inline-block; margin-bottom: 20px; color: #6c26d9; text-decoration: none; font-weight: 600; }
+      .back-link:hover { text-decoration: underline; }
+      
+      .investment-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: all 0.2s; }
+      .investment-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.12); transform: translateY(-2px); }
+      .investment-card h4 { font-size: 16px; font-weight: 700; color: #000; margin-bottom: 8px; }
+      .investment-card p { font-size: 13px; color: #666; margin-bottom: 6px; }
+      .investment-nominal { font-size: 16px; font-weight: 700; color: #6c26d9; margin-top: 12px; }
+      .investment-meta { font-size: 12px; color: #999; margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee; }
+      
+      /* Modal/Popup */
+      .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; }
+      .modal.active { display: flex; }
+      .modal-content { background: #fff; border-radius: 12px; padding: 40px; text-align: center; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; }
+      @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+      .modal-content h2 { font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #000; }
+      .modal-content p { color: #666; margin-bottom: 24px; }
+      .modal-btn { padding: 12px 24px; background: #6c26d9; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-family: Poppins, sans-serif; }
+      .modal-btn:hover { background: #5419b8; }
+      
+      @media(max-width:1024px){
+        .investasi-wrapper { grid-template-columns: 1fr; }
+        .container { padding: 0 40px; }
+      }
+      @media(max-width:640px){
+        .container { padding: 0 20px; }
+        .investasi-left, .investasi-right { padding: 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <a href="#" id="backLink" class="back-link">← Kembali ke Daftar UMKM</a>
+        
+        <div class="investasi-wrapper">
+          <div class="investasi-left">
+            <h2>Informasi Pendanaan</h2>
+            <p>Masukkan nominal donasi/investasi Anda di bawah ini.</p>
+            
+            <form id="investasiForm">
+              <div class="form-group">
+                <label>Nominal Donasi/Investasi</label>
+                <input type="number" id="nominalInput" placeholder="Masukkan nominal" min="10000" step="10000" required />
+              </div>
+
+              <div class="method-group">
+                <label>Pilih Metode Pembayaran</label>
+                <div class="method-option" data-method="ewallet">
+                  <input type="radio" id="ewallet" name="metode" value="ewallet" />
+                  <label for="ewallet" style="margin: 0; cursor: pointer; flex: 1;">E-Wallet</label>
+                </div>
+                <div class="method-option" data-method="transfer">
+                  <input type="radio" id="transfer" name="metode" value="transfer" />
+                  <label for="transfer" style="margin: 0; cursor: pointer; flex: 1;">Transfer Bank</label>
+                </div>
+              </div>
+
+              <button type="submit" class="confirm-btn">Konfirmasi</button>
+            </form>
+          </div>
+
+          <div class="investasi-right">
+            <h2>Ringkasan</h2>
+            <p>Cek informasi di bawah sebelum mengkonfirmasi.</p>
+            
+            <div class="info-card">
+              <strong id="umkmNameDisplay">-</strong>
+              <p id="umkmCategoryDisplay">-</p>
+            </div>
+
+            <div class="info-card">
+              <strong>Nominal Donasi/Investasi</strong>
+              <p id="nominalDisplay">Rp 0</p>
+            </div>
+
+            <div class="info-card">
+              <strong>Pilih Metode Pembayaran</strong>
+              <p id="metodeDisplay">Belum dipilih</p>
+            </div>
+
+            <div style="margin-top: 20px; padding: 16px; background: #f0e6ff; border-radius: 8px; font-size: 13px; color: #555;">
+              <strong>Info:</strong> Setelah Anda klik Konfirmasi, Anda akan diarahkan ke proses pembayaran. Dana akan ditransfer ke UMKM setelah pembayaran berhasil.
+            </div>
+          </div>
+        </div>
+
+        <!-- Riwayat Investasi Section -->
+        <div style="margin-top: 60px;">
+          <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 30px;">Riwayat Investasi Anda</h2>
+          <div id="investmentHistoryContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+            <!-- Investment cards will be generated here -->
+          </div>
+          <div id="noInvestmentHistory" style="text-align: center; padding: 40px; color: #999;">
+            <p>Belum ada riwayat investasi. Mulai investasi sekarang untuk melihat riwayat di sini.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="successModal" class="modal">
+      <div class="modal-content">
+        <h2>Selamat!</h2>
+        <p>Dana Anda telah berhasil diinvestasikan pada UMKM</p>
+        <button class="modal-btn" onclick="document.getElementById('successModal').classList.remove('active'); window.location.href='umkm.html';">Kembali ke Daftar UMKM</button>
+      </div>
+    </div>
+
+    <script>
+      // Get UMKM data from URL
+      const UMKMS = {
+        siti: { name: 'Keripik Pisang', owner: 'Siti Rahmawati' },
+        ria: { name: 'Sports Gear', owner: 'Ria Winata' },
+        andi: { name: 'Aku Tech', owner: 'Andi Kusuma' },
+        sari: { name: 'Sari Salon & Spa', owner: 'Sari Waludari' },
+        budi: { name: 'Budi\'s Apotek', owner: 'Budi Parker' },
+        nia: { name: 'Nia Tur N Travel', owner: 'Nia Rika' }
+      };
+
+      function getQueryParam(name){
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+
+      // Set UMKM data
+      (function(){
+        const id = getQueryParam('id') || 'siti';
+        const umkm = UMKMS[id] || UMKMS['siti'];
+        document.getElementById('umkmNameDisplay').textContent = umkm.name;
+        document.getElementById('umkmCategoryDisplay').textContent = 'oleh ' + umkm.owner;
+        document.getElementById('backLink').href = 'umkm-profile.html?id=' + id;
+      })();
+
+      // Real-time summary update
+      document.getElementById('nominalInput').addEventListener('input', function(){
+        const nominal = parseInt(this.value) || 0;
+        const formatted = nominal > 0 ? 'Rp ' + nominal.toLocaleString('id-ID') : 'Rp 0';
+        document.getElementById('nominalDisplay').textContent = formatted;
+      });
+
+      document.querySelectorAll('input[name="metode"]').forEach(radio => {
+        radio.addEventListener('change', function(){
+          document.querySelectorAll('.method-option').forEach(opt => opt.classList.remove('active'));
+          if(this.checked){
+            this.closest('.method-option').classList.add('active');
+            const label = this.closest('.method-option').querySelector('label').textContent;
+            document.getElementById('metodeDisplay').textContent = label;
+          }
+        });
+      });
+
+      // Form submission
+      document.getElementById('investasiForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const nominal = document.getElementById('nominalInput').value;
+        const metode = document.querySelector('input[name="metode"]:checked');
+
+        if(!nominal || nominal < 10000){
+          alert('Nominal minimal Rp 10.000');
+          return;
+        }
+
+        if(!metode){
+          alert('Pilih metode pembayaran');
+          return;
+        }
+
+        // Save investment data to localStorage
+        const id = getQueryParam('id') || 'siti';
+        const umkm = UMKMS[id] || UMKMS['siti'];
+        const investmentData = {
+          id: id,
+          umkmName: umkm.name,
+          umkmOwner: umkm.owner,
+          nominal: parseInt(nominal),
+          method: metode.value,
+          date: new Date().toLocaleDateString('id-ID'),
+          timestamp: Date.now()
+        };
+        
+        // Get existing investments
+        let investments = [];
+        try{
+          investments = JSON.parse(localStorage.getItem('currentUserInvestments') || '[]');
+        }catch(e){ /* ignore */ }
+        
+        // Add new investment
+        investments.push(investmentData);
+        
+        // Save to localStorage
+        try{
+          localStorage.setItem('currentUserInvestments', JSON.stringify(investments));
+        }catch(e){ /* ignore */ }
+
+        // Show success modal
+        document.getElementById('successModal').classList.add('active');
+      });
+
+      // Display investment history
+      (function(){
+        let investments = [];
+        try{
+          investments = JSON.parse(localStorage.getItem('currentUserInvestments') || '[]');
+        }catch(e){ /* ignore */ }
+
+        const historyContainer = document.getElementById('investmentHistoryContainer');
+        const noHistoryMsg = document.getElementById('noInvestmentHistory');
+
+        if(investments.length === 0){
+          historyContainer.style.display = 'none';
+          noHistoryMsg.style.display = 'block';
+        } else {
+          historyContainer.style.display = 'grid';
+          noHistoryMsg.style.display = 'none';
+          
+          investments.forEach(inv => {
+            const card = document.createElement('div');
+            card.className = 'investment-card';
+            const methodLabel = inv.method === 'ewallet' ? 'E-Wallet' : 'Transfer Bank';
+            card.innerHTML = `
+              <h4>${inv.umkmName}</h4>
+              <p><strong>Pemilik:</strong> ${inv.umkmOwner}</p>
+              <p><strong>Metode:</strong> ${methodLabel}</p>
+              <div class="investment-nominal">Rp ${inv.nominal.toLocaleString('id-ID')}</div>
+              <div class="investment-meta">
+                <div>Tanggal: ${inv.date}</div>
+              </div>
+            `;
+            historyContainer.appendChild(card);
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./css/main.css" rel="stylesheet" />
+    <title>Daftar UMKM</title>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-container">
+        <div class="logo">
+          <img src="images/logo%20kelompok%2011%20vinix-01.png" alt="Kembangin logo" class="logo-img" />
+          <span>UMKM</span>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Beranda</a>
+          
+          <a href="umkm.html"class="active">UMKM</a>
+          <a href="investasi-list.html">Investasi</a>
+          <a href="profil.html">Profil</a>
+          <div class="search-box">
+            <input type="text" placeholder="Search in site" />
+            <span>🔍</span>
+          </div>
+          <a href="login.html" class="hero-btn" id="navLoginBtn">Login</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="umkm-hero">
+        <div class="container">
+          <h1 class="section-title" style="text-align:center">Temukan UMKM</h1>
+          <div style="max-width:480px;margin:18px auto 40px;">
+            <input class="umkm-search" id="umkmSearchInput" placeholder="Masukkan nama UMKM atau pemilik" />
+            <div style="text-align:center;margin-top:12px"><button class="hero-btn" id="umkmSearchBtn">Cari UMKM</button></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="umkm-list">
+        <div class="container">
+          <h2 class="section-title">Daftar UMKM</h2>
+          <div class="umkm-grid">
+            <a class="umkm-card" href="umkm-profile.html?id=siti">
+              <div class="umkm-image"><img src="images/keripik-pisang.jpg" alt="Keripik Pisang"/></div>
+              <div class="umkm-footer">
+                <div class="badge">Lihat Profile</div>
+                <div class="umkm-owner">Siti Rahmawati</div>
+                <div class="umkm-name">Keripik Pisang</div>
+              </div>
+            </a>
+
+            <a class="umkm-card" href="umkm-profile.html?id=ria">
+              <div class="umkm-image"><img src="images/sport-gear.jpg" alt="Sports Gear"/></div>
+              <div class="umkm-footer">
+                <div class="badge">Lihat Profile</div>
+                <div class="umkm-owner">Ria Winata</div>
+                <div class="umkm-name">Sports Gear</div>
+              </div>
+            </a>
+
+            <a class="umkm-card" href="umkm-profile.html?id=andi">
+              <div class="umkm-image"><img src="images/tech.jpg" alt="Aku Tech"/></div>
+              <div class="umkm-footer">
+                <div class="badge">Lihat Profile</div>
+                <div class="umkm-owner">Andi Kusuma</div>
+                <div class="umkm-name">Aku Tech</div>
+              </div>
+            </a>
+
+            <a class="umkm-card" href="umkm-profile.html?id=sari">
+              <div class="umkm-image"><img src="images/salon.jpg" alt="Sari Salon & Spa"/></div>
+              <div class="umkm-footer">
+                <div class="badge">Lihat Profile</div>
+                <div class="umkm-owner">Sari Waludari</div>
+                <div class="umkm-name">Sari Salon & Spa</div>
+              </div>
+            </a>
+
+            <a class="umkm-card" href="umkm-profile.html?id=budi">
+              <div class="umkm-image"><img src="images/apotek.jpg" alt="Budi's Apotek"/></div>
+              <div class="umkm-footer">
+                <div class="badge">Lihat Profile</div>
+                <div class="umkm-owner">Budi Parker</div>
+                <div class="umkm-name">Budi's Apotek</div>
+              </div>
+            </a>
+
+            <a class="umkm-card" href="umkm-profile.html?id=nia">
+              <div class="umkm-image"><img src="images/tour.jpg" alt="Nia Tur N Travel"/></div>
+              <div class="umkm-footer">
+                <div class="badge">Lihat Profile</div>
+                <div class="umkm-owner">Nia Rika</div>
+                <div class="umkm-name">Nia Tur N Travel</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <p>Kontak: info@kembangin.com</p>
+        <p>Sosial Media: Facebook, Twitter, Instagram</p>
+        <p>Link Legal: Kebijakan Privasi, Syarat dan Ketentuan</p>
+      </div>
+    </footer>
+
+    <script>
+      // Search functionality
+      (function(){
+        const searchInput = document.getElementById('umkmSearchInput');
+        const searchBtn = document.getElementById('umkmSearchBtn');
+        const cards = document.querySelectorAll('.umkm-card');
+
+        function filterCards(){
+          const query = searchInput.value.toLowerCase().trim();
+          let visibleCount = 0;
+          
+          cards.forEach(card => {
+            const owner = card.querySelector('.umkm-owner').textContent.toLowerCase();
+            const name = card.querySelector('.umkm-name').textContent.toLowerCase();
+            
+            if(owner.includes(query) || name.includes(query) || query === ''){
+              card.style.display = '';
+              visibleCount++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+          
+          // Show message if no results
+          const grid = document.querySelector('.umkm-grid');
+          let noResultsMsg = document.getElementById('noResultsMsg');
+          if(visibleCount === 0 && query !== ''){
+            if(!noResultsMsg){
+              noResultsMsg = document.createElement('p');
+              noResultsMsg.id = 'noResultsMsg';
+              noResultsMsg.style.textAlign = 'center';
+              noResultsMsg.style.padding = '40px 0';
+              noResultsMsg.style.color = '#999';
+              grid.parentNode.insertBefore(noResultsMsg, grid);
+            }
+            noResultsMsg.textContent = 'Tidak ada UMKM yang cocok dengan pencarian "' + searchInput.value + '"';
+          } else if(noResultsMsg){
+            noResultsMsg.remove();
+          }
+        }
+
+        if(searchBtn) searchBtn.addEventListener('click', filterCards);
+        if(searchInput) searchInput.addEventListener('keyup', filterCards);
+      })();
+    </script>
+
+    <script>
+      (function(){
+        const logoSpan = document.querySelector('.logo span');
+        const currentPage = window.location.pathname.split('/').pop();
+        if(currentPage === 'index.html' || currentPage === '') {
+          if(logoSpan) logoSpan.textContent = 'Beranda';
+        } else if(currentPage === 'profil.html') {
+          if(logoSpan) logoSpan.textContent = 'Profil';
+        } else if(currentPage === 'login.html') {
+          if(logoSpan) logoSpan.textContent = 'Login';
+        } else if(currentPage === 'register.html') {
+          if(logoSpan) logoSpan.textContent = 'Register';
+        } else if(currentPage === 'umkm.html') {
+          if(logoSpan) logoSpan.textContent = 'UMKM';
+        }
+      })();
+
+      // Hide Login link when a user is logged in
+      (function(){
+        try{
+          var cur = localStorage.getItem('currentUser');
+          var loginBtn = document.getElementById('navLoginBtn');
+          if(cur && loginBtn) loginBtn.style.display = 'none';
+        }catch(e){ /* ignore */ }
+      })();
+    </script>
+
+    <script>
+  (function () {
+    const grid = document.querySelector('.umkm-grid');
+    const mitras = JSON.parse(localStorage.getItem('mitras') || '[]');
+
+    if (!mitras.length) return;
+
+    mitras.forEach(mitra => {
+      if (!mitra.isActive) return;
+
+      const card = document.createElement('a');
+      card.className = 'umkm-card';
+      card.href = `umkm-profile.html?id=${mitra.id}`;
+
+      card.innerHTML = `
+        <div class="umkm-image">
+          <img src="${mitra.avatar || 'images/default-umkm.jpg'}" alt="${mitra.umkmName || mitra.name}">
+        </div>
+        <div class="umkm-footer">
+          <div class="badge">Lihat Profile</div>
+          <div class="umkm-owner">${mitra.ownerName || mitra.name}</div>
+          <div class="umkm-name">${mitra.umkmName || mitra.name}</div>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  })();
+</script>
+
+  </body>
+</html>

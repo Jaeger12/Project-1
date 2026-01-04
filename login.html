@@ -46,7 +46,7 @@
 
       .login-visual {
         flex: 1;
-        background: url("images/v92_156.png") center/cover no-repeat;
+        background: url("images/background login.jpg") center/cover no-repeat;
         position: relative;
         display: flex;
         align-items: center;
@@ -167,6 +167,22 @@
       </div>
     </main>
     <script>
+      // Update navbar text based on current page
+      (function(){
+        const logoSpan = document.querySelector('.logo span');
+        const currentPage = window.location.pathname.split('/').pop();
+        
+        if(currentPage === 'index.html' || currentPage === '') {
+          if(logoSpan) logoSpan.textContent = 'Beranda';
+        } else if(currentPage === 'profil.html') {
+          if(logoSpan) logoSpan.textContent = 'Profil';
+        } else if(currentPage === 'login.html') {
+          if(logoSpan) logoSpan.textContent = 'Login';
+        } else if(currentPage === 'register.html') {
+          if(logoSpan) logoSpan.textContent = 'Register';
+        }
+      })();
+
       function getUsers(){
         try{ return JSON.parse(localStorage.getItem('users')||'[]'); }catch(e){return[]}
       }
@@ -184,7 +200,7 @@
         if(user.password !== pass){ msg.textContent = 'Password salah.'; return; }
         // login success: store current user in localStorage (simple session)
         try{
-          localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email }));
+          localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email, phone: user.phone }));
         }catch(e){ /* ignore */ }
         alert('Login berhasil. Mengarah ke beranda.');
         window.location.href = 'index.html';

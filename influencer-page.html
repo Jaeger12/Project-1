@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="./css/main.css" rel="stylesheet" />
+    <title>Temukan Influencer - Kembangin</title>
+    <style>
+      body { background: #f5f5f7; }
+      
+      .dashboard-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding: 20px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        z-index: 1000;
+      }
+      
+      .dashboard-nav .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+      
+      .dashboard-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #000;
+      }
+      
+      .dashboard-logo img {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+      }
+      
+      .dashboard-menu {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+      }
+      
+      .dashboard-menu a {
+        color: #666;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      
+      .dashboard-menu a:hover,
+      .dashboard-menu a.active {
+        color: #6c26d9;
+      }
+      
+      .search-input {
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        font-size: 14px;
+        outline: none;
+        width: 200px;
+      }
+      
+      /* Hero Section */
+      .hero-influencer {
+        margin-top: 80px;
+        height: 400px;
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/influencer.jpeg') center/cover no-repeat;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-align: center;
+        padding: 0 20px;
+      }
+      
+      .hero-influencer h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        line-height: 1.2;
+      }
+      
+      .hero-influencer p {
+        font-size: 16px;
+        margin-bottom: 32px;
+        opacity: 0.95;
+        max-width: 600px;
+      }
+      
+      .search-box-hero {
+        display: flex;
+        gap: 12px;
+        max-width: 600px;
+        width: 100%;
+      }
+      
+      .search-box-hero input {
+        flex: 1;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        outline: none;
+      }
+      
+      .btn-search {
+        background: linear-gradient(135deg, #6c26d9 0%, #8b5cf6 100%);
+        color: #fff;
+        padding: 14px 32px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        white-space: nowrap;
+      }
+      
+      .btn-search:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(108, 38, 217, 0.4);
+      }
+      
+      /* Content Section */
+      .content-section {
+        max-width: 1400px;
+        margin: 60px auto;
+        padding: 0 40px;
+      }
+      
+      .section-title {
+        font-size: 36px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 48px;
+        color: #000;
+      }
+      
+      .influencer-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 80px;
+      }
+      
+      .influencer-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+      
+      .influencer-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      }
+      
+      .influencer-image {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+      }
+      
+      .influencer-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+      }
+      
+      .badge-available {
+        background: #10b981;
+      }
+      
+      .badge-unavailable {
+        background: #ef4444;
+      }
+      
+      .badge-kerjasama {
+        background: #10b981;
+      }
+      
+      .category-tag {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        padding: 6px 12px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #6c26d9;
+      }
+      
+      .influencer-info {
+        padding: 20px;
+      }
+      
+      .influencer-info h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 4px;
+      }
+      
+      .influencer-info .niche {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 12px;
+      }
+      
+      .influencer-price {
+        font-size: 16px;
+        font-weight: 700;
+        color: #6c26d9;
+      }
+      
+      .price-highlight {
+        color: #f59e0b;
+      }
+      
+      .fire-icon {
+        display: inline-block;
+        margin-left: 4px;
+      }
+      
+      /* Recommendation Section */
+      .recommendation-section {
+        background: linear-gradient(135deg, #6c26d9 0%, #8b5cf6 100%);
+        padding: 60px 40px;
+        border-radius: 16px;
+        color: #fff;
+        margin: 80px auto;
+        max-width: 1400px;
+      }
+      
+      .recommendation-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      
+      .recommendation-left h2 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      
+      .recommendation-left p {
+        font-size: 16px;
+        opacity: 0.95;
+      }
+      
+      .recommendation-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .recommendation-card {
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      
+      .rec-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+      
+      .rec-info h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      
+      .rec-info p {
+        font-size: 13px;
+        opacity: 0.9;
+      }
+      
+      /* Footer */
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+        padding: 40px 0;
+        border-top: 1px solid #e5e5e5;
+      }
+      
+      .footer-links a {
+        color: #666;
+        text-decoration: none;
+        font-size: 14px;
+      }
+      
+      .footer-links a:hover {
+        color: #6c26d9;
+      }
+      
+      @media (max-width: 1024px) {
+        .influencer-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .recommendation-content {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .influencer-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .hero-influencer h1 {
+          font-size: 32px;
+        }
+        
+        .search-box-hero {
+          flex-direction: column;
+        }
+        
+        .dashboard-menu {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Dashboard Navigation -->
+    <nav class="dashboard-nav">
+      <div class="nav-container">
+        <div class="dashboard-logo">
+          <img src="images/logo%20kelompok%2011%20vinix-01.png" alt="Kembangin Logo" />
+          <span>Temukan Influencermu!</span>
+        </div>
+        <div class="dashboard-menu">
+          <a href="dashboard-mitra-umkm.html">Dashboard</a>
+          <a href="influencer-page.html"class="active">Influencer</a>
+          <a href="dana_investor_page.html">Dana Investor</a>
+          <a href="milestone-page.html">Milestone</a>
+          <a href="#">Pelatihan</a>
+          <a href="profil-mitra-page.html">Profil</a>
+          <input type="text" class="search-input" placeholder="Search in site" />
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-influencer">
+      <h1>Temukan Influencer<br>yang Sesuai</h1>
+      <p>Hubungkan dengan influencer untuk meningkatkan visibilitas UMKM Anda.</p>
+      <div class="search-box-hero">
+        <input type="text" id="searchInfluencer" placeholder="Masukkan nama influencer atau niche" />
+        <button class="btn-search" onclick="searchInfluencer()">Cari Influencer</button>
+      </div>
+    </section>
+
+    <!-- Influencer List Section -->
+    <section class="content-section">
+      <h2 class="section-title">Daftar Influencer</h2>
+      
+      <div class="influencer-grid" id="influencerGrid">
+        <!-- Influencer Card 1 -->
+        <div class="influencer-card" data-name="Chef Dedi BuzzerMBG" data-niche="makanan">
+          <div class="influencer-image">
+            <img src="images/deddy.png" alt="Chef Dedi" />
+            <span class="badge badge-kerjasama">Ajukan Kerjasama</span>
+            <span class="category-tag">Makanan</span>
+          </div>
+          <div class="influencer-info">
+            <h3>Chef Dedi BuzzerMBG</h3>
+            <p class="niche">CEO of Podcast</p>
+            <div class="influencer-price">Biaya: Rp 500.000</div>
+          </div>
+        </div>
+
+        <!-- Influencer Card 2 -->
+        <div class="influencer-card" data-name="Putri Kecil Ayah" data-niche="fashion">
+          <div class="influencer-image">
+            <img src="images/ivan.jpeg" alt="Putri Kecil Ayah" />
+            <span class="badge badge-kerjasama">Ajukan Kerjasama</span>
+            <span class="category-tag">Fashion</span>
+          </div>
+          <div class="influencer-info">
+            <h3>"Putri Kecil Ayah" Fashion</h3>
+            <p class="niche">Fashion & Lifestyle</p>
+            <div class="influencer-price">Biaya: Rp 1.200.000</div>
+          </div>
+        </div>
+
+        <!-- Influencer Card 3 -->
+        <div class="influencer-card" data-name="Dapa GadgetOut" data-niche="teknologi">
+          <div class="influencer-image">
+            <img src="images/gadgetin.jpg" alt="Dapa GadgetOut" />
+            <span class="badge badge-kerjasama">Ajukan Kerjasama</span>
+            <span class="category-tag">Teknologi</span>
+          </div>
+          <div class="influencer-info">
+            <h3>Dapa GadgetOut</h3>
+            <p class="niche">Tech Review & Gadget</p>
+            <div class="influencer-price">Biaya: Rp 750.000</div>
+          </div>
+        </div>
+
+        <!-- Influencer Card 4 -->
+        <div class="influencer-card" data-name="Beauty Guru Sari" data-niche="kecantikan">
+          <div class="influencer-image">
+            <img src="images/fuji.jpg" alt="Beauty Guru" />
+            <span class="badge badge-kerjasama">Ajukan Kerjasama</span>
+            <span class="category-tag">Kecantikan</span>
+          </div>
+          <div class="influencer-info">
+            <h3>Beauty Guru Sari</h3>
+            <p class="niche">Beauty & Skincare</p>
+            <div class="influencer-price price-highlight">Biaya: Rp 2.500.000 <span class="fire-icon">🔥</span></div>
+          </div>
+        </div>
+
+        <!-- Influencer Card 5 -->
+        <div class="influencer-card" data-name="Mas Gatot Fitness" data-niche="kesehatan">
+          <div class="influencer-image">
+            <img src="images/mas amba.jpg" alt="Mas Gatot" />
+            <span class="badge badge-kerjasama">Ajukan Kerjasama</span>
+            <span class="category-tag">Kesehatan</span>
+          </div>
+          <div class="influencer-info">
+            <h3>Mas Gatot Fitness</h3>
+            <p class="niche">Fitness & Health</p>
+            <div class="influencer-price">Biaya: Rp 1.600.000</div>
+          </div>
+        </div>
+
+        <!-- Influencer Card 6 -->
+        <div class="influencer-card" data-name="Pandu Waskitha" data-niche="travel">
+          <div class="influencer-image">
+            <img src="images/pandu.jpg" alt="Pandu Waskitha" />
+            <span class="badge badge-unavailable">Tidak Tersedia</span>
+            <span class="category-tag">Travel</span>
+          </div>
+          <div class="influencer-info">
+            <h3>Pandu Waskitha</h3>
+            <p class="niche">(@backpackertampan)</p>
+            <div class="influencer-price">Biaya: Rp 1.500.000</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommendation Section -->
+    <section class="recommendation-section">
+      <div class="recommendation-content">
+        <div class="recommendation-left">
+          <h2>Rekomendasi Influencer</h2>
+          <p>Dipilih berdasarkan kesesuaian dengan UMKM Anda.</p>
+        </div>
+        <div class="recommendation-list">
+          <div class="recommendation-card">
+            <div class="rec-icon">👗</div>
+            <div class="rec-info">
+              <h4>"Putri Kecil Ayah" Fashion</h4>
+              <p>Niche: Fashion, Biaya: IDR 1.000.000</p>
+            </div>
+          </div>
+          <div class="recommendation-card">
+            <div class="rec-icon">🍳</div>
+            <div class="rec-info">
+              <h4>Chef Dedi BuzzerMBG</h4>
+              <p>Niche: Makanan, Biaya: IDR 500.000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-links">
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat dan Ketentuan</a>
+        <a href="#">Bantuan</a>
+      </div>
+    </footer>
+
+    <script>
+      // Check if user is logged in as mitra
+      (function(){
+        try {
+          const currentMitra = localStorage.getItem('currentMitra');
+          if(!currentMitra) {
+            alert('Anda harus login sebagai mitra terlebih dahulu.');
+            window.location.href = 'login-mitra.html';
+          }
+        } catch(e) {
+          window.location.href = 'login-mitra.html';
+        }
+      })();
+
+      // Search functionality
+      function searchInfluencer() {
+        const searchTerm = document.getElementById('searchInfluencer').value.toLowerCase();
+        const cards = document.querySelectorAll('.influencer-card');
+        
+        cards.forEach(card => {
+          const name = card.getAttribute('data-name').toLowerCase();
+          const niche = card.getAttribute('data-niche').toLowerCase();
+          
+          if(name.includes(searchTerm) || niche.includes(searchTerm) || searchTerm === '') {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      // Search on Enter key
+      document.getElementById('searchInfluencer').addEventListener('keypress', function(e) {
+        if(e.key === 'Enter') {
+          searchInfluencer();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./css/main.css" rel="stylesheet" />
+    <title>Daftar Investasi - Kembangin</title>
+    <style>
+      .investasi-hero {
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/background daftar invest.jpg') center/cover no-repeat;
+        padding: 120px 0;
+        color: #fff;
+        text-align: center;
+      }
+      .investasi-hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .investasi-hero p {
+        font-size: 16px;
+        opacity: 0.9;
+        margin-bottom: 24px;
+      }
+      .investasi-list {
+        padding: 80px 0;
+        background: #f9f9fb;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-container">
+        <div class="logo">
+          <img src="images/logo%20kelompok%2011%20vinix-01.png" alt="Kembangin logo" class="logo-img" />
+          <span>Investasi</span>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Beranda</a>
+          
+          <a href="umkm.html">UMKM</a>
+          <a href="investasi-list.html" class="active">Investasi</a>
+          <a href="profil.html">Profil</a>
+          <div class="search-box">
+            <input type="text" placeholder="Search in site" />
+            <span>🔍</span>
+          </div>
+          <a href="login.html" class="hero-btn" id="navLoginBtn">Login</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="investasi-hero">
+        <div class="container">
+          <h1>Berinvestasi untuk UMKM</h1>
+          <p>Bantu UMKM untuk mengembangkan bisnis mereka dengan dukungan finansial</p>
+          <a href="umkm.html" class="hero-btn">Investasi</a>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Investasi List Section -->
+      <section class="investasi-list">
+        <div class="container">
+          <h2 class="section-title">Daftar Investasi UMKM Anda</h2>
+          <div id="investasiListContainer" class="umkm-grid">
+            <!-- Investment cards will be generated here -->
+          </div>
+          <div id="noInvestasiMessage" style="text-align: center; padding: 60px 20px; color: #999;">
+            <p style="font-size: 16px;">Anda belum melakukan investasi. <a href="umkm.html" style="color: #6c26d9; text-decoration: none;">Mulai berinvestasi sekarang</a></p>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <p>Kontak: info@kembangin.com</p>
+        <p>Sosial Media: Facebook, Twitter, Instagram</p>
+        <p>Link Legal: Kebijakan Privasi, Syarat dan Ketentuan</p>
+      </div>
+    </footer>
+
+    <script>
+      // Hide Login link when a user is logged in
+      (function(){
+        try{
+          var cur = localStorage.getItem('currentUser');
+          var loginBtn = document.getElementById('navLoginBtn');
+          if(cur && loginBtn) loginBtn.style.display = 'none';
+        }catch(e){ /* ignore */ }
+      })();
+
+      // Update navbar text based on current page
+      (function(){
+        const logoSpan = document.querySelector('.logo span');
+        const currentPage = window.location.pathname.split('/').pop();
+        if(currentPage === 'investasi-list.html') {
+          if(logoSpan) logoSpan.textContent = 'Investasi';
+        }
+      })();
+
+      // Load user investments and display them
+      (function(){
+        const umkmProfiles = JSON.parse(localStorage.getItem('umkmProfiles') || '{}');
+
+        let investments = [];
+        try{
+          investments = JSON.parse(localStorage.getItem('currentUserInvestments') || '[]');
+        }catch(e){ /* ignore */ }
+
+        const container = document.getElementById('investasiListContainer');
+        const noMessage = document.getElementById('noInvestasiMessage');
+
+        if(investments.length === 0){
+          container.style.display = 'none';
+          noMessage.style.display = 'block';
+        } else {
+          container.style.display = 'grid';
+          noMessage.style.display = 'none';
+
+          // Group investments by UMKM ID
+          const investedUmkm = {};
+          investments.forEach(inv => {
+            if(!investedUmkm[inv.id]){
+              const umkmProfile = umkmProfiles[inv.id] || {};
+              investedUmkm[inv.id] = {
+                totalAmount: 0,
+                umkmName: umkmProfile.namaUMKM || inv.umkmName,
+                umkmOwner: umkmProfile.namaPemilik || inv.umkmOwner,
+                image: umkmProfile.gambar || 'images/v92_166.png' // Fallback image
+              };
+            }
+            investedUmkm[inv.id].totalAmount += inv.nominal;
+          });
+
+          // Create cards for each invested UMKM
+          Object.keys(investedUmkm).forEach(id => {
+            const inv = investedUmkm[id];
+            const card = document.createElement('a');
+            card.className = 'umkm-card';
+            card.href = `umkm-profile.html?id=${id}`;
+            card.innerHTML = `
+              <div class="umkm-image"><img src="${inv.image}" alt="${inv.umkmName}"/></div>
+              <div class="umkm-footer">
+                <div class="badge">Lihat Profile</div>
+                <div class="umkm-owner">${inv.umkmOwner}</div>
+                <div class="umkm-name">${inv.umkmName}</div>
+                <div style="margin-top: 8px; font-size: 14px; color: #fff; font-weight: 600;">
+                  Total: Rp ${inv.totalAmount.toLocaleString('id-ID')}
+                </div>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
+      })();
+    </script>
+
+        
+  </body>
+</html>

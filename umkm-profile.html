@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="./css/main.css" rel="stylesheet" />
+    <title>Profil UMKM</title>
+    <style>
+      .umkm-header {
+        background: linear-gradient(135deg,#6c26d9 0%,#5419b8 100%);
+        color: #fff;
+        padding: 36px 0;
+      }
+      .umkm-header .container { display:flex; align-items:center; gap:20px; }
+      .back-link { color: #fff; text-decoration:none; font-size:20px; margin-right:12px; }
+      .avatar-lg { width:96px; height:96px; border-radius:50%; object-fit:cover; border:4px solid rgba(255,255,255,0.15); }
+      .umkm-title { font-size:20px; font-weight:700; margin-bottom:6px; }
+      .umkm-bio { opacity:0.95; max-width:900px; margin: 26px auto 6px; text-align:center; color:#fff; }
+      .profile-content { padding: 40px 0; }
+      .profile-cards { display:flex; gap:20px; justify-content:center; margin-top:20px; flex-wrap:wrap; }
+      .profile-card { background:#fff; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.06); padding:16px; min-width:240px; }
+      .detail-section { max-width:980px; margin:40px auto; display:grid; grid-template-columns:1fr 300px; gap:36px; align-items:start; }
+      .invest-btn { display:block; width:100%; padding:12px 18px; background:linear-gradient(135deg,#6c26d9 0%,#5419b8 100%); color:#fff; border-radius:8px; text-align:center; text-decoration:none; font-weight:700; }
+      @media(max-width:900px){ .detail-section { grid-template-columns:1fr; } .umkm-header .container{flex-direction:column; text-align:center;} }
+    </style>
+  </head>
+  <body>
+    <header class="umkm-header">
+      <div class="container">
+        <div style="display:flex;align-items:center;">
+          <a href="umkm.html" class="back-link">←</a>
+          <img id="umkmAvatar" class="avatar-lg" src="images/team/nalendra.jpg" alt="avatar" />
+        </div>
+        <div>
+          <div class="umkm-title" id="umkmName">NAMA UMKM</div>
+          <div id="umkmShort" style="opacity:0.95;">Deskripsi singkat UMKM</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="profile-content">
+        <p class="umkm-bio" id="umkmBio">Bio lengkap UMKM akan ditampilkan di sini.</p>
+
+        <div class="profile-cards container">
+          <div class="profile-card">
+            <strong>Foto Produk</strong>
+            <div style="margin-top:8px;"><img id="prodImg" src="images/team/nalendra.jpg" style="width:100%;height:110px;object-fit:cover;border-radius:6px;"/></div>
+          </div>
+          <div class="profile-card">
+            <strong>Deskripsi Singkat</strong>
+            <p id="shortDesc" style="margin-top:8px;color:#333;">Deskripsi singkat produk/layanan.</p>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div>
+            <h2>Detail Proposal</h2>
+            <p id="proposalText">Proposal singkat UMKM akan ditampilkan di sini.</p>
+          </div>
+          <div>
+            <div class="profile-card" style="margin-bottom:14px;">
+              <strong>Ringkasan Usaha</strong>
+              <p style="margin-top:8px;color:#444;">Usaha ini bertujuan untuk menyediakan produk/layanan berkualitas.</p>
+            </div>
+            <div class="profile-card" style="margin-bottom:14px;">
+              <strong>Target</strong>
+              <p style="margin-top:8px;color:#444;">Meningkatkan penjualan dan ekspansi pasar.</p>
+            </div>
+            <div class="profile-card">
+              <strong>Kebutuhan Dana</strong>
+              <p style="margin-top:8px;color:#444;">Rp 50.000.000</p>
+            </div>
+            <div style="margin-top:18px;"><a href="#" id="investBtn" class="invest-btn">Investasi</a></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Default UMKM data
+      const DEFAULT_UMKMS = {
+        siti: {
+          name: 'Siti Rahmawati',
+          avatar: 'images/team/nalendra.jpg',
+          prod: 'images/team/nalendra.jpg',
+          short: 'Saya menjalankan usaha keripik pisang dari resep keluarga sejak lima tahun lalu di Yogyakarta.',
+          bio: 'Siti telah mengembangkan usaha keripik pisang sejak lima tahun lalu dengan mengandalkan resep keluarga. Produk ini dipasarkan di pasar tradisional dan marketplace online. Meski mendapat respons positif dari pelanggan, perkembangan usaha masih terbatas akibat kendala modal, promosi, dan pencatatan keuangan yang belum optimal.',
+          proposal: 'Detail proposal Siti: perencanaan produksi, pembelian bahan baku, dan promosi digital.'
+        },
+        ria: {
+          name: 'Ria Winata', 
+          avatar: 'images/team/nurlaila.png', 
+          prod: 'images/team/nurlaila.png', 
+          short: 'Sports gear dan perlengkapan olahraga lokal.', 
+          bio: 'Ria menjalankan toko perlengkapan olahraga.', 
+          proposal: 'Pengembangan inventori dan pemasaran online.'
+        },
+        andi: { 
+          name: 'Andi Kusuma', 
+          avatar: 'images/team/elian.png', 
+          prod: 'images/team/elian.png', 
+          short: 'Toko elektronik dan gadget.', 
+          bio: 'Andi menyediakan solusi teknologi untuk pelaku usaha kecil.', 
+          proposal: 'Perluasan layanan dan layanan after-sales.' 
+        },
+        sari: { 
+          name: 'Sari Waludari', 
+          avatar: 'images/team/rayhan.png', 
+          prod: 'images/team/rayhan.png', 
+          short: 'Salon & Spa berkualitas.', 
+          bio: 'Sari mengelola salon dan spa premium.', 
+          proposal: 'Renovasi ruang layanan dan pelatihan staff.' 
+        },
+        budi: { 
+          name: 'Budi Parker', 
+          avatar: 'images/team/damar.png', 
+          prod: 'images/team/damar.png', 
+          short: 'Apotek lokal lengkap.', 
+          bio: 'Budi menyediakan obat dan konsultasi kesehatan lokal.', 
+          proposal: 'Pengadaan stok obat dan sistem inventori.' 
+        },
+        nia: { 
+          name: 'Nia Rika', 
+          avatar: 'images/team/nicko.png', 
+          prod: 'images/team/nicko.png', 
+          short: 'Agen travel dan paket wisata.', 
+          bio: 'Nia mengorganisir paket wisata domestik dan internasional.', 
+          proposal: 'Pengembangan paket dan pemasaran influencer.' 
+        }
+      };
+
+      function getQueryParam(name){
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+
+      // Get mitra data from localStorage
+      function getMitraData(id) {
+        try {
+          const mitras = JSON.parse(localStorage.getItem('mitras') || '[]');
+          const mitra = mitras.find(m => m.id === id);
+          
+          if(mitra) {
+            return {
+              name: mitra.name,
+              avatar: mitra.avatar || 'images/team/nalendra.jpg',
+              prod: mitra.avatar || 'images/team/nalendra.jpg',
+              short: mitra.businessDesc || 'Deskripsi usaha akan ditambahkan segera.',
+              bio: mitra.businessDesc || 'Informasi lengkap tentang usaha akan ditambahkan segera.',
+              proposal: `Proposal ${mitra.name}: ${mitra.businessSummary || 'Detail proposal akan ditambahkan.'}`
+            };
+          }
+          return null;
+        } catch(e) {
+          return null;
+        }
+      }
+
+      (function(){
+        const id = getQueryParam('id') || 'siti';
+        
+        // Try to get mitra data first, fallback to default
+        let data = getMitraData(id) || DEFAULT_UMKMS[id] || DEFAULT_UMKMS['siti'];
+        
+        document.getElementById('umkmName').textContent = data.name.toUpperCase();
+        document.getElementById('umkmAvatar').src = data.avatar;
+        document.getElementById('umkmShort').textContent = data.short;
+        document.getElementById('umkmBio').textContent = data.bio;
+        document.getElementById('prodImg').src = data.prod;
+        document.getElementById('shortDesc').textContent = data.short;
+        document.getElementById('proposalText').textContent = data.proposal;
+        
+        // Set Investasi button link
+        const investBtn = document.getElementById('investBtn');
+        if(investBtn) investBtn.href = 'investasi.html?id=' + id;
+      })();
+    </script>
+  </body>
+</html>
